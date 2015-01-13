@@ -1,0 +1,15 @@
+{
+  "name": "SyntaxHighlighter",
+  "homepage": "https://github.com/alexgorbatchev/SyntaxHighlighter",
+  "version": "3.0.83",
+  "_release": "3.0.83",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.0.83",
+    "commit": "682bf8cfd5a0686d51ed16325b72625ddf64ae11"
+  },
+  "_source": "git://github.com/alexgorbatchev/SyntaxHighlighter.git",
+  "_target": "~3.0.83",
+  "_originalSource": "SyntaxHighlighter",
+  "_direct": true
+}
