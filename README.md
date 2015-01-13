@@ -1,4 +1,4 @@
-## amo.js
+## amo.js  (๑‾ ꇴ ‾๑)
 
 `A javascript library for creating CSS3 animation.`
 
