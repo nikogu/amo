@@ -32,20 +32,22 @@
     	    var node = document.getElementById('animate-node');
 
             //2. Creating a css animation
-    	    var fadeAnim = Amo.createCssAnim({
+    	    var fadeAnim = Amo.keyframes({
                 'opacity': 0
         	}, {
                 'opacity': 1
-            });
-
-            //3. Running a css animation
-            fadeAnim.run(node, {
+            }).animate({
+            //help: http://www.w3schools.com/css/css3_animations.asp
+                mode: 'forwards',
                 duration: 1000,
                 easing: 'ease',
                 time: 1,
                 delay: 1000,
                 direction: 'alternate'
-            }, function() {
+            });
+
+            //3. Running a css animation
+            fadeAnim.run(node, function() {
                 console.log('over');
             });
         &lt;/script&gt;
@@ -61,16 +63,17 @@
 <script>
     SyntaxHighlighter.all();
 
-    var rotateAnim = Amo.keyframe({
+    var rotateAnim = Amo.keyframes({
         '-webkit-transform': 'rotate(0deg)'
     }, {
         '-webkit-transform': 'rotate(40deg)'
     }).animate({
-        duration: 500,
-        easing: 'linear'
+        duration: 5000,
+        easing: 'linear',
+        time: -1
     });
 
-    var blinkAnim = Amo.keyframe({
+    var blinkAnim = Amo.keyframes({
         0: {
             color: '#ff513c'
         },
@@ -96,14 +99,7 @@
     });
 
     rotateAnim.run($('#runner'));
-    setTimeout(function() {
-        console.log(1);
-        rotateAnim.run($('#runner'), function() {
-            console.log(2);
-        });
-    }, 2000);
-
-//    blinkAnim.run($('#logo'));
+    blinkAnim.run($('#logo'));
 
 </script>
 </body>

@@ -181,8 +181,8 @@
         return className;
     }
 
-    //create css keyframe
-    function keyframe(from, to) {
+    //create css keyframes
+    function keyframes(from, to) {
 
         var frameName = getRandomFrameName();
 
@@ -252,7 +252,7 @@
     }
 
     var Amo = {
-        keyframe: keyframe
+        keyframes: keyframes
     };
 
     exports.Amo = Amo;
