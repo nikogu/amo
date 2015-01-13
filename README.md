@@ -106,8 +106,11 @@ you can create animate depend on keyframe
         time: -1,
         direction: 'alternate'
     });
+    
+    //$('#test') => ok
+    //document.getElementById('test') => ok
     myAnim.run($('#test'), function() {
         console.log('animation over'); 
     });
 
-__You do not care about the css animation's class and keyframes's style, just focus on animation is the only thing you need to do.__
+__You do not care about the css animation's class and keyframes's style, focusing on animation is the only thing you need to do.__
