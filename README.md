@@ -2,6 +2,8 @@
 
 `A javascript library for creating CSS3 animation.`
 
+![amo.js](https://i.alipayobjects.com/i/localhost/jpg/201501/4CuX4otXPR.jpg "amo.js")
+
 #### Guide
 
 ##### 1. import amo.js
