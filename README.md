@@ -4,7 +4,7 @@
 
 ![amo.js](https://i.alipayobjects.com/i/localhost/jpg/201501/4CuX4otXPR.jpg "amo.js")
 
-#### Guide
+#### Guide  Ծ‸Ծ
 
 ##### 1. import amo.js
 
@@ -35,7 +35,7 @@
         console.log('over');
     });
 
-#### Detail
+#### Detail  눈_눈
 
 ##### Amo.keyframe
 Amo.keyframe is as same as css @keyframe
