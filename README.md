@@ -102,4 +102,5 @@ you can create animate depend on keyframe
         console.log('animation over'); 
     });
 
-you do not care about the css animation's class and keyframes's style, just focus on animation is the only thing you need to do.
+
+You do not care about the css animation's class and keyframes's style, just focus on animation is the only thing you need to do.
