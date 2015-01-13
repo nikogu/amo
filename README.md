@@ -1,5 +1,7 @@
 ## amo.js
 
+[![Build Status](https://travis-ci.org/nikogu/amo.svg)](https://travis-ci.org/nikogu/amo)
+
 一个写css3动画的js库
 
 #### 光速使用
