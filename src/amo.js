@@ -200,6 +200,8 @@
     //create css animate class
     function animate(conf) {
 
+        var conf = conf || {};
+
         var time = conf.time || 1;
         if (time < 0) {
             time = 'infinite';

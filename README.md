@@ -1,6 +1,6 @@
 ## amo.js
 
-A javascript library for creating CSS3 animation.
+`A javascript library for creating CSS3 animation.`
 
 #### Guide
 
@@ -38,11 +38,13 @@ A javascript library for creating CSS3 animation.
 ##### Amo.keyframe
 Amo.keyframe is as same as css @keyframe
 
+    /* css */
     @keyframes mymove {
         from {top:0px;}
         to {top:200px;}
     }
     ==>
+    /* amo.js */
     Amo.keyframes({
         top: '0px'
     }, {
@@ -50,12 +52,14 @@ Amo.keyframe is as same as css @keyframe
     });
     
     
+    /* css */
     @keyframes mymove {
         0%   {top:0px;}
         50%  {top:100px;}
         100% {top:20px;}
     }
     ==>
+    /* amo.js */
     Amo.keyframes({
         0: {
             top: '0px' 
@@ -71,6 +75,7 @@ Amo.keyframe is as same as css @keyframe
 ##### keyframe.animate & animate.run
 you can create animate depend on keyframe
 
+    /* css */
     @keyframes mymove {
         0%   {top:0px;}
         50%  {top:100px;}
@@ -80,6 +85,7 @@ you can create animate depend on keyframe
         animation: mymove 5s linear 2s infinite alternate;
     }
     =>
+    /* amo.js */
     var mymove = Amo.keyframes({
         0: {
             top: '0px' 
@@ -102,5 +108,4 @@ you can create animate depend on keyframe
         console.log('animation over'); 
     });
 
-
-You do not care about the css animation's class and keyframes's style, just focus on animation is the only thing you need to do.
+__You do not care about the css animation's class and keyframes's style, just focus on animation is the only thing you need to do.__
