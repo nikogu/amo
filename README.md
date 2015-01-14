@@ -2,7 +2,7 @@
 
 `A javascript library for creating CSS3 animation.`
 
-![amo.js](https://i.alipayobjects.com/i/localhost/jpg/201501/4CuX4otXPR.jpg "amo.js")
+![amo.js](https://i.alipayobjects.com/i/localhost/jpg/201501/4D9BIKtMNh.jpg "amo.js")
 
 #### Guide  Ծ‸Ծ
 
