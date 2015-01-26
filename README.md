@@ -2,6 +2,8 @@
 
 `A javascript library for creating CSS3 animation.`
 
+[home page](http://nikogu.github.io/amo/)
+
 ![amo.js](https://i.alipayobjects.com/i/localhost/jpg/201501/4D9BIKtMNh.jpg "amo.js")
 
 #### Guide  Ծ‸Ծ
