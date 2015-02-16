@@ -148,7 +148,7 @@
 
         style += '}';
 
-        //兼容性
+        //compatibility
         for (var i = 0; i < keyframes.length; i++) {
             fullStyle += '@' + keyframes[i] + ' ' + name;
             fullStyle += style;
