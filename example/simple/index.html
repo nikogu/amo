@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>amo - simple example</title>
+        <style>
+            #test, #test2 {
+                background: green;
+                position: absolute;
+                width: 100px;
+                height: 100px;
+            }
+            #test2 {
+                left: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="test"></div>
+        <div id="test2"></div>
+        <script src="../../src/amo.js"></script>
+        <script>
+            var animNode = document.getElementsByTagName('div');
+
+            var rotateAnim = Amo.keyframes({
+                '-webkit-transform': 'rotate(0deg)'
+            }, {
+                '-webkit-transform': 'rotate(360deg)'
+            }).animate({
+                mode: 'forwards',
+                duration: 1000,
+                easing: 'linear',
+                time: -1,
+                delay: 1000
+            });
+
+            var animInstance = rotateAnim.run(animNode, function() {
+                console.log('over');
+            });
+
+            var t = false;
+            document.getElementById('test').addEventListener('click', function() {
+                t = !t;
+                if ( t ) {
+                    animInstance.stop();
+                } else {
+                    animInstance.start();
+                }
+            });
+        </script>
+    </body>
+</html>

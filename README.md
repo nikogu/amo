@@ -115,4 +115,19 @@ you can create animate depend on keyframe
         console.log('animation over'); 
     });
 
-__You do not care about the css animation's class and keyframes's style, focusing on animation is the only thing you need to do.__
+##### animate instance 
+
+    var myAnimIns = myAnim.run($('#test'), function() {
+        console.log('animation over'); 
+    });
+    
+    //you can stop the animation
+    myAnimIns.stop();
+    
+    //you can start the animation too
+    myAnimIns.start();
+    
+    //reset the animation
+    myAnimIns.reset();
+
+__You do not need care about the css animation's class and keyframes's style, focusing on animation is the only thing you need to do.__

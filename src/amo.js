@@ -8,16 +8,12 @@
 ;
 (function (exports) {
 
-    var Animations = {};
+    var Animations = {},
+        prefix = ['', '-webkit-', '-o-', '-moz-'];
 
     //util function
     function inArray(arr, item) {
-        for (var i = 0; i < arr.length; i++) {
-            if (item == arr[i]) {
-                return i;
-            }
-        }
-        return -1;
+        return arr.indexOf(item);
     }
 
     function isArray(arr) {
@@ -28,12 +24,27 @@
         return Object.prototype.toString.call(num) === '[object Number]';
     }
 
+    function all(items, callback) {
+        if (isArray(items)) {
+            Array.prototype.forEach.call(items, function (item) {
+                callback(item);
+            });
+        } else {
+            callback(items);
+        }
+    }
+
     function addClass(node, clazz) {
         var classArr = node.className.split(' ');
         if (inArray(classArr, clazz) == -1) {
             classArr.push(clazz);
             node.className = classArr.join(' ');
         }
+    }
+
+    function hasClass(node, clazz) {
+        var classArr = node.className.split(' ');
+        return inArray(classArr, clazz) != -1;
     }
 
     function removeClass(node, clazz) {
@@ -44,6 +55,41 @@
             node.className = classArr.join(' ');
         }
     }
+
+    //Array.prototype.map compatibility
+    //for mobile?
+    (function () {
+        if (!Array.prototype.map) {
+            Array.prototype.map = function (callback, thisArg) {
+
+                var T, A, k;
+
+                if (this == null) {
+                    throw new TypeError(" this is null or not defined");
+                }
+                var O = Object(this);
+                var len = O.length >>> 0;
+                if ({}.toString.call(callback) != "[object Function]") {
+                    throw new TypeError(callback + " is not a function");
+                }
+                if (thisArg) {
+                    T = thisArg;
+                }
+                A = new Array(len);
+                k = 0;
+                while (k < len) {
+                    var kValue, mappedValue;
+                    if (k in O) {
+                        kValue = O[ k ];
+                        mappedValue = callback.call(T, kValue, k, O);
+                        A[ k ] = mappedValue;
+                    }
+                    k++;
+                }
+                return A;
+            };
+        }
+    })();
 
     //++++++++++++++++++++++
     //The Sea.js plugin for embedding style text in JavaScript code
@@ -104,6 +150,9 @@
 
     })();
 
+    //++++++++++++++++++++++
+    // create & init css3 animation style
+    //++++++++++++++++++++++
     function getRandomFrameName() {
         return 'Amo-frame-' + Math.floor(Math.random() * 10000000);
     }
@@ -114,7 +163,9 @@
 
     function createAnimStyle(name, from, to) {
 
-        var keyframes = ['keyframes', '-webkit-keyframes', '-o-keyframes', '-moz-keyframes'];
+        var keyframes = prefix.map(function (val) {
+            return val + 'keyframes';
+        });
         var fullStyle = '';
 
         var style = '{';
@@ -157,22 +208,24 @@
         return fullStyle;
     }
 
-    function createCssTransition(animName, duration, easing, time, delay, direction, mode) {
+    function createCssAnimation(animName, duration, easing, time, delay, direction, mode) {
 
-        var transitions = ['animation', '-webkit-animation', '-o-animation', '-moz-animatin'],
+        var animations = prefix.map(function (val) {
+                return val + 'animation';
+            }),
             style = '';
 
         var className = getRandomTName();
 
         style += '.' + className + '{';
-        for (var i = transitions.length; i--;) {
-            style += transitions[i] + '-name:' + animName + ';';
-            style += transitions[i] + '-duration:' + (duration / 1000) + 's;';
-            style += transitions[i] + '-timing-function:' + easing + ';';
-            style += transitions[i] + '-iteration-count:' + time + ';';
-            style += transitions[i] + '-fill-mode:'+mode+';';
-            style += transitions[i] + '-delay:' + delay + ';';
-            style += transitions[i] + '-direction:' + direction + ';';
+        for (var i = animations.length; i--;) {
+            style += animations[i] + '-name:' + animName + ';';
+            style += animations[i] + '-duration:' + (duration / 1000) + 's;';
+            style += animations[i] + '-timing-function:' + easing + ';';
+            style += animations[i] + '-iteration-count:' + time + ';';
+            style += animations[i] + '-fill-mode:' + mode + ';';
+            style += animations[i] + '-delay:' + delay + ';';
+            style += animations[i] + '-direction:' + direction + ';';
         }
         style += '}';
 
@@ -213,7 +266,7 @@
             direction = conf.direction || 'normal',
             mode = conf.mode || 'forwards';
 
-        var className = createCssTransition(this.frameName, duration, easing, time, delay, direction, mode);
+        var className = createCssAnimation(this.frameName, duration, easing, time, delay, direction, mode);
 
         return {
             className: className,
@@ -229,29 +282,101 @@
             duration = this.duration,
             time = this.time;
 
-        if (isArray(node)) {
-            Array.prototype.forEach.call(node, function (item) {
-                removeClass(item, className);
-                setTimeout(function() {
-                    addClass(item, className);
-                }, 0);
-            });
-        } else {
-            removeClass(node, className);
-            setTimeout(function() {
-                addClass(node, className);
-            }, 0);
-        }
+        var timer;
 
-        if (isNumber(time)) {
-            setTimeout(function () {
-                //removeClass(node, className);
-                if (callback) {
-                    callback();
-                }
-            }, duration * time);
+        all(node, function (item) {
+            removeClass(item, className);
+        });
+        setTimeout(function () {
+            all(node, function (item) {
+                addClass(item, className);
+            })
+        }, 0);
+
+        var ins = {
+            className: className,
+            timer: timer,
+            node: node,
+            time: time,
+            duration: duration,
+            totalTime: duration * time,
+            callback: callback,
+            stop: stop,
+            start: start,
+            reset: reset
+        };
+
+        ins.start();
+
+        return ins;
+    }
+
+    //++++++++++++++++++++++
+    // animation instance function
+    //++++++++++++++++++++++
+    function stop() {
+        var that = this;
+        if (isNumber(that.time) && that.callback) {
+            that.state = 'stop';
+            that.stopTime = new Date().getTime();
+            clearTimeout(that.timer);
+        }
+        all(that.node, function (item) {
+            addClass(item, 'amo-animation-pause');
+        });
+    }
+
+    function start() {
+        var that = this;
+        if (isNumber(that.time) && that.callback) {
+            if (that.state == 'stop') {
+                that.totalTime -= (that.stopTime - that.startTime);
+                all(that.node, function(item) {
+                    removeClass(item, 'amo-animation-pause');
+                });
+            }
+
+            if ( that.state != 'running' && !that.isOver) {
+                that.state = 'running';
+                that.startTime = new Date().getTime();
+                that.timer = setTimeout(function () {
+                    that.isOver = true;
+                    that.callback();
+                }, that.totalTime);
+            }
+        } else {
+            all(that.node, function(item) {
+                removeClass(item, 'amo-animation-pause');
+            });
         }
     }
+
+    function reset() {
+        var that = this;
+        that.isOver = false;
+        that.state = '';
+        that.totalTime = that.duration * that.time;
+        all(that.node, function(item) {
+            removeClass(item, that.className);
+        });
+        setTimeout(function () {
+            all(that.node, function (item) {
+                addClass(item, that.className);
+            })
+        }, 0);
+    }
+
+    //++++++++++++++++++++++
+    // init - insert a pause animate style
+    //++++++++++++++++++++++
+    (function () {
+        var style = '.amo-animation-pause { ';
+        for (var i = prefix.length; i--;) {
+            style += prefix[i] + 'animation-play-state: paused !important;';
+        }
+        style += '}';
+        importStyle(style);
+    })();
 
     var Amo = {
         keyframes: keyframes
