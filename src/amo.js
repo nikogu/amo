@@ -1,6 +1,7 @@
 /**
  * amo.js
  * easy to use css animation
+ * http://nikogu.github.com/amo
  *
  * @author niko
  * @date 2014-12-31
@@ -9,7 +10,7 @@
 (function (exports) {
 
     var Animations = {},
-        prefix = ['', '-webkit-', '-o-', '-moz-'];
+        prefix = ['', '-webkit-'];
 
     //util function
     function inArray(arr, item) {
@@ -364,6 +365,7 @@
                 addClass(item, that.className);
             })
         }, 0);
+        that.start();
     }
 
     //++++++++++++++++++++++
