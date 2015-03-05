@@ -285,7 +285,7 @@
             all(node, function (item) {
                 addClass(item, className);
             })
-        }, 0);
+        }, 16.66);
 
         var ins = {
             className: className,
