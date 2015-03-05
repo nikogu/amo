@@ -4,7 +4,9 @@ var gulp = require('gulp'),
 
 gulp.task('default', function () {
     gulp.src('src/amo.js').
-        pipe(uglify()).
+        pipe(uglify({
+           preserveComments: 'some'
+        })).
         pipe(rename('amo.js')).
         pipe(gulp.dest('build'));
 });

@@ -1,4 +1,4 @@
-/**
+/*!
  * amo.js
  * easy to use css animation
  * http://nikogu.github.com/amo
@@ -41,11 +41,6 @@
             classArr.push(clazz);
             node.className = classArr.join(' ');
         }
-    }
-
-    function hasClass(node, clazz) {
-        var classArr = node.className.split(' ');
-        return inArray(classArr, clazz) != -1;
     }
 
     function removeClass(node, clazz) {
@@ -283,8 +278,6 @@
             duration = this.duration,
             time = this.time;
 
-        var timer;
-
         all(node, function (item) {
             removeClass(item, className);
         });
@@ -296,11 +289,9 @@
 
         var ins = {
             className: className,
-            timer: timer,
             node: node,
             time: time,
             duration: duration,
-            totalTime: duration * time,
             callback: callback,
             stop: stop,
             start: start,
@@ -320,7 +311,6 @@
         if (isNumber(that.time) && that.callback) {
             that.state = 'stop';
             that.stopTime = new Date().getTime();
-            clearTimeout(that.timer);
         }
         all(that.node, function (item) {
             addClass(item, 'amo-animation-pause');
@@ -331,7 +321,6 @@
         var that = this;
         if (isNumber(that.time) && that.callback) {
             if (that.state == 'stop') {
-                that.totalTime -= (that.stopTime - that.startTime);
                 all(that.node, function(item) {
                     removeClass(item, 'amo-animation-pause');
                 });
@@ -340,10 +329,20 @@
             if ( that.state != 'running' && !that.isOver) {
                 that.state = 'running';
                 that.startTime = new Date().getTime();
-                that.timer = setTimeout(function () {
-                    that.isOver = true;
-                    that.callback();
-                }, that.totalTime);
+                all(that.node, function(item) {
+                    item.addEventListener('webkitAnimationEnd', function() {
+                        if ( !that.isOver ) {
+                            that.callback();
+                        }
+                        that.isOver = true;
+                    });
+                    item.addEventListener('animationEnd', function() {
+                        if ( !that.isOver ) {
+                            that.callback();
+                        }
+                        that.isOver = true;
+                    });
+                });
             }
         } else {
             all(that.node, function(item) {
@@ -356,15 +355,14 @@
         var that = this;
         that.isOver = false;
         that.state = '';
-        that.totalTime = that.duration * that.time;
         all(that.node, function(item) {
             removeClass(item, that.className);
         });
         setTimeout(function () {
             all(that.node, function (item) {
                 addClass(item, that.className);
-            })
-        }, 0);
+            });
+        }, 16.66);
         that.start();
     }
 
