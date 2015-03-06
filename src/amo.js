@@ -22,7 +22,7 @@
     }
 
     function isNumber(num) {
-        return Object.prototype.toString.call(num) === '[object Number]';
+        return Object.prototype.toString.call(num) === '[object Number]' && !isNaN(num);
     }
 
     function all(items, callback) {
@@ -157,6 +157,14 @@
         return 'Amo-transition-' + Math.floor(Math.random() * 10000000);
     }
 
+    function num2string(key, val) {
+        if ( isNumber(val*1) ) {
+            return val + 'px';
+        } else {
+            return val;
+        }
+    }
+
     function formatStyle(o, prop) {
         var s = '',
             p = prop.toLowerCase()
@@ -167,7 +175,7 @@
             s += o[prop] + ';';
         } else {
             s += prop + ':';
-            s += o[prop] + ';';
+            s += num2string(prop, o[prop]) + ';';
         }
         return s;
     }
