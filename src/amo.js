@@ -157,6 +157,21 @@
         return 'Amo-transition-' + Math.floor(Math.random() * 10000000);
     }
 
+    function formatStyle(o, prop) {
+        var s = '',
+            p = prop.toLowerCase()
+        if ( p == '-webkit-transform' || p == 'transform') {
+            s += '-webkit-transform:';
+            s += o[prop] + ';';
+            s += 'transform:';
+            s += o[prop] + ';';
+        } else {
+            s += prop + ':';
+            s += o[prop] + ';';
+        }
+        return s;
+    }
+
     function createAnimStyle(name, from, to) {
 
         var keyframes = prefix.map(function (val) {
@@ -169,15 +184,17 @@
         if (to) {
             style += '0% {';
             for (var prop in from) {
-                style += prop + ':';
-                style += from[prop] + ';';
+                style += formatStyle(from, prop);
+//                style += prop + ':';
+//                style += from[prop] + ';';
             }
             style += '}';
 
             style += '100% {';
             for (var prop in to) {
-                style += prop + ':';
-                style += to[prop] + ';';
+                style += formatStyle(to, prop);
+//                style += prop + ':';
+//                style += to[prop] + ';';
             }
             style += '}';
         } else {
@@ -185,8 +202,9 @@
                 if (isNumber(prop * 1) && from.hasOwnProperty(prop)) {
                     style += prop + '% {';
                     for (var p in from[prop]) {
-                        style += p + ':';
-                        style += from[prop][p] + ';';
+                        style += formatStyle(from[prop], p);
+//                        style += p + ':';
+//                        style += from[prop][p] + ';';
                     }
                     style += '}';
                 }
