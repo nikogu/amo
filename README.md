@@ -1,5 +1,7 @@
 ## amo.js  (๑‾ ꇴ ‾๑)
 
+[![Join the chat at https://gitter.im/nikogu/amo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nikogu/amo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 `A javascript library for creating CSS3 animation.`
 
 [home page](http://nikogu.github.io/amo/)
