@@ -13,11 +13,9 @@
         "url": "https://github.com/nikogu/amo/issues"
     },
     "devDependencies": {
-        "gulp": "^3.8.11"
-    },
-    "dependencies": {
-        "gulp-rename": "^1.2.0",
-        "gulp-uglify": "^1.1.0"
+        "gulp": "^3.9.1",
+        "gulp-rename": "^1.2.2",
+        "gulp-uglify": "^1.5.3"
     },
     "author": {
         "name": "niko",
